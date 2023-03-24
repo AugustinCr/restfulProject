@@ -65,4 +65,16 @@ public class ProfileController {
         userRepository.delete(deleteUser);
         return "User Deleted...";
     }
+
+    @GetMapping(value = "/cards")
+    public List<Card> getCards() {
+        return cardRepository.findAll();
+    }
+
+    @DeleteMapping(value = "/delete/card/{userID}")
+    public String deleteCard(@PathVariable long userID) {
+        Card deleteCard = cardRepository.findById(userID).get();
+        cardRepository.delete(deleteCard);
+        return "Card Deleted...";
+    }
 }
