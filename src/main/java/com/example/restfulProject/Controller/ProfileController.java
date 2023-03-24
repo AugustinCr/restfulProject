@@ -18,9 +18,9 @@ public class ProfileController {
     private CardRepository cardRepository;
 
     @PostMapping(value = "/save")
-    public String saveUser(@RequestBody User user) {
+    public void saveUser(@RequestBody User user) {
         userRepository.save(user);
-        return "Saved...";
+        //return "Saved...";
     }
 
     @GetMapping(value = "/user/{username}")
@@ -29,18 +29,18 @@ public class ProfileController {
     }
 
     @PutMapping(value = "/update/{username}")
-    public String updateUser(@PathVariable String username, @RequestBody User user) {
+    public void updateUser(@PathVariable String username, @RequestBody User user) {
         User updateUser = userRepository.findByUsername(username);
         updateUser.setUsername(user.getUsername());
         updateUser.setPassword(user.getPassword());
         updateUser.setName(user.getName());
         updateUser.setAddress(user.getAddress());
         userRepository.save(updateUser);
-        return "Updated...";
+        //return "Updated...";
     }
 
     @PostMapping(value = "/save/card/{username}")
-    public String updateUserCredit(@PathVariable String username, @RequestBody Card card) {
+    public void updateUserCredit(@PathVariable String username, @RequestBody Card card) {
         Card userCard = card;
         User foundUser = userRepository.findByUsername(username);
         long userID = foundUser.getUserID();
@@ -51,7 +51,7 @@ public class ProfileController {
         userCard.setSecuritycode(card.getSecuritycode());
 
         cardRepository.save(userCard);
-        return "Added...";
+        //return "Added...";
     }
 
     @GetMapping(value = "/users")
@@ -59,7 +59,7 @@ public class ProfileController {
         return userRepository.findAll();
     }
 
-    @DeleteMapping(value = "/delete/{userID}")
+    @DeleteMapping(value = "/delete/user/{userID}")
     public String deleteUser(@PathVariable long userID) {
         User deleteUser = userRepository.findById(userID).get();
         userRepository.delete(deleteUser);
