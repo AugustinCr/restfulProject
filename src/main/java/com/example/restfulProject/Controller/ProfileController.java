@@ -1,6 +1,8 @@
 package com.example.restfulProject.Controller;
 
+import com.example.restfulProject.Model.Card;
 import com.example.restfulProject.Model.User;
+import com.example.restfulProject.Repository.CardRepository;
 import com.example.restfulProject.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,9 @@ import java.util.List;
 public class ProfileController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
 
     @PostMapping(value = "/save")
     public String saveUser(@RequestBody User user) {
@@ -32,6 +37,21 @@ public class ProfileController {
         updateUser.setAddress(user.getAddress());
         userRepository.save(updateUser);
         return "Updated...";
+    }
+
+    @PostMapping(value = "/save/card/{username}")
+    public String updateUserCredit(@PathVariable String username, @RequestBody Card card) {
+        Card userCard = card;
+        User foundUser = userRepository.findByUsername(username);
+        long userID = foundUser.getUserID();
+
+        userCard.setUserID(userID);
+        userCard.setCardnumber(card.getCardnumber());
+        userCard.setExpirationdate(card.getExpirationdate());
+        userCard.setSecuritycode(card.getSecuritycode());
+
+        cardRepository.save(userCard);
+        return "Added...";
     }
 
     @GetMapping(value = "/users")
