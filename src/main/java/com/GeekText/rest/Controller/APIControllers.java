@@ -5,16 +5,12 @@ import com.GeekText.rest.Models.ShoppingCart;
 import com.GeekText.rest.Models.ShoppingCartResultRow;
 import com.GeekText.rest.Repo.BooksRepo;
 import com.GeekText.rest.Repo.ShoppingCartRepo;
-import org.hibernate.boot.jaxb.hbm.spi.EntityInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class APIControllers {
@@ -25,10 +21,10 @@ public class APIControllers {
     @Autowired
     private BooksRepo booksRepo;
 
-    @GetMapping(value = "/")
-    public String getPage() {
-        return "Welcome";
-    }
+    //@GetMapping(value = "/")
+   // public String getPage() {
+        //return "Welcome";
+   // }
 
     @GetMapping(value = "/cart")
     public List<ShoppingCartResultRow> get(@RequestParam Integer userId) {
@@ -61,7 +57,7 @@ public class APIControllers {
     }
 
 
-    @GetMapping(value = "/cost")
+    @GetMapping(value = "/cost") // gets total for the shopping cart
     public Float getcost(@RequestParam Integer userId) {
         if (userId == null) {
             return 0.0F;
